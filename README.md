@@ -1,2 +1,2 @@
-# project-assets-manager
+# Project Assets Manager
  
