@@ -13,9 +13,17 @@ export default {
             },
             primary: {
                DEFAULT: '#82c6ef',
-               100: '#6da9b9'
+               100: '#6da9b9',
+               200: '#0482ce',
+            },
+            white: {
+               DEFAULT: '#fff',
+               100: '#d9dfe2'
             }
          },
+         boxShadow: {
+            'xl': '0 35px 60px -15px rgb(255 255 255 / 30%)',
+          }
       },
    },
    plugins: [],

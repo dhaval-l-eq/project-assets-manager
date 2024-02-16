@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-   @apply font-sans font-normal leading-tight bg-dark
+   @apply font-sans font-normal leading-tight bg-dark text-white
+}
+
+.link {
+   @apply hover:text-primary-200 transition duration-200
 }

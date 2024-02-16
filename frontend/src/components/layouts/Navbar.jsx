@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Button } from "@/components/ui/button"
-
 
 function Navbar() {
    const linkClasses = ({ isActive }) =>
@@ -13,6 +12,11 @@ function Navbar() {
       <header className="flex items-center justify-between py-7 px-10 bg-dark-100">
          <nav>
             <ul className="flex items-center space-x-5">
+               <li>
+                  <Link className='text-white-100 font-bold text-xl leading-none' to="/">
+                     <p>PROJECT ASSETS</p> <p className='tracking-[11.3px]'>MANAGER</p>
+                  </Link>
+               </li>
                <li>
                   <NavLink className={linkClasses} to="/">
                      Home
@@ -32,7 +36,7 @@ function Navbar() {
          </nav>
 
          <div className="flex">
-            <Button>Logout</Button>
+            <Button variant='outline'>Logout</Button>
          </div>
       </header>
    );
