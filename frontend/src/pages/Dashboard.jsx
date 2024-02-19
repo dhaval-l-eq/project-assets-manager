@@ -1,6 +1,6 @@
 import ProjectItem from '@/components/main/ProjectItem';
-import { PROJECT_LIST_URL } from '@/helpers/config';
-import fetchData from '@/helpers/service';
+import { PROJECT_LIST_URL } from '@/utils/config';
+import fetchData from '@/utils/service';
 import { useQuery } from '@tanstack/react-query';
 
 function Dashboard() {

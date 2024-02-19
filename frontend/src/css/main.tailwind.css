@@ -7,5 +7,16 @@ body {
 }
 
 .link {
-   @apply hover:text-primary-200 transition duration-200
+   @apply hover:text-primary-200 cursor-pointer transition duration-200 break-all;
+   
+}
+
+.link:not(.link-full) {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}  
+
+.link-full {
+   max-width: 300px;
 }

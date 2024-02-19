@@ -58,3 +58,21 @@ formElements.forEach(el => {
 
 export const formSchemaDef = schemaObj;
 export const formKeys = formKeysObj;
+
+export const projectElements = [
+   {
+      id: 'p1',
+      label: 'URL',
+      handle: 'primaryUrl',
+   },
+   {
+      id: 'p2',
+      label: 'Figma',
+      handle: 'figma',
+   },
+   {
+      id: 'p3',
+      label: 'Github',
+      handle: 'githubRepo',
+   },
+]

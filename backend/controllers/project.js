@@ -1,27 +1,34 @@
+const Project = require('../models/project');
+
 exports.getProjects = async (req, res) => {
-   res.status(200).json([
-      {
-         id: (Math.random() * 1000).toString().replace('.', ''),
-         title: 'Restaurant SM',
-         primaryUrl: 'www.my-project.com',
-         figma: 'figma.com',
-         githubRepo: 'github.com',
-         additional: [
-            { name: 'Google', url: 'google.com' },
-            { name: 'Facebook', url: 'facebook.com' },
-            { name: 'Facebook', url: 'facebook.com' },
-         ],
-      },
-      {
-         id: (Math.random() * 1000).toString().replace('.', ''),
-         title: 'Artizan',
-         primaryUrl: 'www.artizan.com',
-         figma: 'figma.com',
-         githubRepo: 'github.com',
-         additional: [
-            { name: 'Google', url: 'google.com' },
-            { name: 'Facebook', url: 'facebook.com' },
-         ],
-      },
-   ]);
+   const projects = await Project.findAll();
+   res.status(200).json(projects);
 };
+
+exports.getProject = async (req,res) => {
+   const {projectId} = req.params;
+   const project = await Project.findByPk(projectId);
+   res.status(200).json(project);
+}
+
+exports.addProject = async (req, res) => {
+   const { projectTitle, url, figma, github, additional1, additional2, additional3 } = req.body;
+   const newProject = {
+      title: projectTitle,
+      primaryUrl: url,
+      figma: figma,
+      githubRepo: github,
+      additional1: additional1,
+      additional2: additional2,
+      additional3: additional3,
+   }
+   const project = await Project.create(newProject);
+   res.status(200).json({ status: 'Success!', message: 'Project added successfully!', data: project });
+};
+
+exports.deleteProject = async (req,res) => {
+   const projectId = req.query.id;
+   const project = await Project.findByPk(projectId)
+   await project.destroy();
+   res.status(200).json({ status: 'Success!', message: 'Project deleted successfully!'})
+}

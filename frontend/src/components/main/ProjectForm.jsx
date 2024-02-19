@@ -11,20 +11,26 @@ import {
    FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { formElements, formKeys, formSchemaDef } from '@/helpers/project-config';
+import { formElements, formKeys, formSchemaDef } from '@/utils/project-config';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useState } from 'react';
 
 const formSchema = z.object(formSchemaDef);
 
-function ProjectForm() {
+function ProjectForm({submitHandler, data}) {
+
+   const [isMoreItemsVisible, setIsMoreItemsVisible] = useState(false);
+
    const form = useForm({
       resolver: zodResolver(formSchema),
-      defaultValues: formKeys,
+      defaultValues: data || formKeys,
    });
 
    // 2. Define a submit handler.
    function onSubmit(values) {
       // Do something with the form values.
       console.log(values);
+      submitHandler(values);
    }
    return (
       <div className="max-w-[600px] mx-auto">
@@ -32,7 +38,7 @@ function ProjectForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                {formElements.map(
                   (el, idx) =>
-                     idx < 4 && (
+                     (idx < 4 || isMoreItemsVisible) && (
                         <FormField
                            key={el.id}
                            control={form.control}
@@ -54,9 +60,24 @@ function ProjectForm() {
                )}
                <div className="flex items-center justify-between">
                   <Button type="submit">Submit</Button>
-                  <Button className="text-3xl rounded-full" type="button" variant="outline" size="icon">
-                     +
-                  </Button>
+                  <TooltipProvider delayDuration={300}>
+                     <Tooltip>
+                        <TooltipTrigger asChild>
+                           <Button
+                              onClick={() => setIsMoreItemsVisible(prev => !prev)}
+                              className="text-3xl rounded-full"
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                           >
+                              {isMoreItemsVisible ? '-' : '+'}
+                           </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side='bottom'>
+                           <p>{isMoreItemsVisible ? 'Hide more Items' : 'Show more Items'}</p>
+                        </TooltipContent>
+                     </Tooltip>
+                  </TooltipProvider>
                </div>
             </form>
          </Form>

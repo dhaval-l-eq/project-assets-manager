@@ -19,6 +19,9 @@ export default {
             white: {
                DEFAULT: '#fff',
                100: '#d9dfe2'
+            },
+            danger: {
+               DEFAULT: '#fa6f6feb',
             }
          },
          boxShadow: {
