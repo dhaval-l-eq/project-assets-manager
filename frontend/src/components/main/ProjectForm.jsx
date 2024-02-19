@@ -11,23 +11,14 @@ import {
    FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { formElements, formKeys, formSchemaDef } from '@/helpers/project-config';
 
-const formSchema = z.object({
-   projectTitle: z.string().min(2),
-   url: z.string().url(),
-   figma: z.string().url(),
-   github: z.string().url(),
-});
+const formSchema = z.object(formSchemaDef);
 
 function ProjectForm() {
    const form = useForm({
       resolver: zodResolver(formSchema),
-      defaultValues: {
-         projectTitle: '',
-         url: '',
-         figma: '',
-         github: '',
-      },
+      defaultValues: formKeys,
    });
 
    // 2. Define a submit handler.
@@ -39,20 +30,34 @@ function ProjectForm() {
       <div className="max-w-[600px] mx-auto">
          <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-               <FormField
-                  control={form.control}
-                  name="projectTitle"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormLabel>Project Title</FormLabel>
-                        <FormControl>
-                           <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                     </FormItem>
-                  )}
-               />
-               <Button type="submit">Submit</Button>
+               {formElements.map(
+                  (el, idx) =>
+                     idx < 4 && (
+                        <FormField
+                           key={el.id}
+                           control={form.control}
+                           name={el.name}
+                           render={({ field }) => (
+                              <FormItem>
+                                 <FormLabel>{el.label}</FormLabel>
+                                 <FormControl>
+                                    <Input
+                                       placeholder={el.placeholder || 'Enter ' + el.label}
+                                       {...field}
+                                    />
+                                 </FormControl>
+                                 <FormMessage />
+                              </FormItem>
+                           )}
+                        />
+                     )
+               )}
+               <div className="flex items-center justify-between">
+                  <Button type="submit">Submit</Button>
+                  <Button className="text-3xl rounded-full" type="button" variant="outline" size="icon">
+                     +
+                  </Button>
+               </div>
             </form>
          </Form>
       </div>
