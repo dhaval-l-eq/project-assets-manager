@@ -51,7 +51,7 @@ function ProjectItem({ details }) {
    const {mutate, isPending, isError, error} = useMutation({
       mutationFn: (id) => fetchData(PROJECT_DELETE_URL + id, {method: 'DELETE'}),
       onSuccess: (data) => {
-         console.log(data, 'product deleted successfully!');
+         console.log(data);
          queryClient.invalidateQueries({queryKey: ['project']});
          btnCloseDialog.current.click();
       }
