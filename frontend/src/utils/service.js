@@ -8,11 +8,12 @@ export default async function fetchData(url, config) {
 
       if (config) {
          fetchConfig = {
-            method: config.method,
+            method: config?.method || 'GET',
             body: config.payload ? JSON.stringify(config.payload) : undefined,
             headers: {
                'Content-Type': 'application/json',
             },
+            signal: config?.signal || undefined,
          };
       }
 

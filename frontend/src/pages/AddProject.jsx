@@ -10,8 +10,8 @@ function AddProject() {
       mutationFn: payload => fetchData(PROJECT_ADD_URL, { method: 'POST', payload }),
       onSuccess: data => {
          console.log('form data submitted successfully!', data);
-         navigate('/');
          queryClient.invalidateQueries({ queryKey: ['project'] });
+         navigate('/');
       },
    });
    return <ProjectForm submitHandler={data => mutate(data)} />;

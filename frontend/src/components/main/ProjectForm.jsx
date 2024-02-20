@@ -24,6 +24,10 @@ function ProjectForm({submitHandler, data}) {
    const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: data || formKeys,
+      resetOptions: {
+         keepDirtyValues: false,
+         keepErrors: false,
+       },
    });
 
    // 2. Define a submit handler.
