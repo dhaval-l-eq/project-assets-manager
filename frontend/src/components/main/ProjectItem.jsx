@@ -51,7 +51,6 @@ function ProjectItem({ details }) {
    const {mutate, isPending, isError, error} = useMutation({
       mutationFn: (id) => fetchData(PROJECT_DELETE_URL + id, {method: 'DELETE'}),
       onSuccess: (data) => {
-         console.log(data);
          queryClient.invalidateQueries({queryKey: ['project']});
          btnCloseDialog.current.click();
       }
@@ -82,7 +81,7 @@ function ProjectItem({ details }) {
          </CardContent>
          <CardFooter className="mt-auto">
             <div className="flex items-center space-x-2">
-               <Link to={'/edit/' + details.id} className={buttonVariants({size: 'sm'})}>Edit</Link>
+               <Link to={'/edit/' + details._id} className={buttonVariants({size: 'sm'})}>Edit</Link>
                <Dialog>
                   <DialogTrigger className={buttonVariants({variant: 'destructive', size: 'sm'})}>
                      Delete
@@ -99,7 +98,7 @@ function ProjectItem({ details }) {
                         <DialogClose asChild>
                            <Button ref={btnCloseDialog} variant="outline">Close</Button>
                         </DialogClose>
-                        <Button onClick={() => mutate(details.id)} variant="destructive">Delete</Button>
+                        <Button onClick={() => mutate(details._id)} variant="destructive">Delete</Button>
                      </DialogFooter>
                   </DialogContent>
                </Dialog>

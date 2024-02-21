@@ -12,9 +12,11 @@ function Dashboard() {
    if(isPending) return <h3>Loading...</h3>
    if(error) return <h3>An error occured : {error.message}</h3>
 
+   if(data.length === 0) return <h1 className='font-medium text-2xl'>No projects found! Please add one</h1>
+
    return (
       <div className="grid grid-cols-4 gap-4">
-         {data.map(item => <ProjectItem key={item.id} details={item} />)}
+         {data.map(item => <ProjectItem key={item._id} details={item} />)}
       </div>
    );
 }
