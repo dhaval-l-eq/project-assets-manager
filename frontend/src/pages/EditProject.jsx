@@ -16,8 +16,8 @@ function EditProject() {
    const navigate = useNavigate();
    const { mutate, isPendingEdit, isError, errorEdit } = useMutation({
       mutationFn: payload => fetchData(PROJECT_EDIT_URL + projectId, { method: 'PATCH', payload }),
-      onSuccess: data => {
-         queryClient.invalidateQueries({ queryKey: ['project', projectId] });
+      onSuccess: () => {
+         queryClient.removeQueries({queryKey: ['project', projectId], exact: true});
          navigate('/');
       },
    });
@@ -25,13 +25,16 @@ function EditProject() {
    if (isPending) return <p>Loading...</p>;
    if (error) return <p>{error.message}</p>;
 
+   if(!data || data?.length === 0) {
+      return <h1>Entry not found!</h1>
+   }
+
    const transformedData = {
       projectTitle: data.title,
       url: data.primaryUrl,
       github: data.githubRepo,
       ...data,
    };
-   console.log(transformedData);
 
    return <ProjectForm submitHandler={data => mutate(data)} data={transformedData} />;
 }
