@@ -1,7 +1,7 @@
 const Project = require('../models/project');
 
 exports.getProjects = async (req, res) => {
-   const projects = await Project.fetchAll();
+   const projects = await Project.find();
    res.status(200).json(projects);
 };
 
@@ -12,17 +12,15 @@ exports.getProject = async (req, res) => {
 };
 
 exports.addProject = async (req, res) => {
-   const { projectTitle, url, figma, github, additional1, additional2, additional3 } = req.body;
+   const { projectTitle, url, figma, github, additionalDetails } = req.body;
 
-   const project = new Project(
-      projectTitle,
-      url,
+   const project = new Project({
+      title: projectTitle,
+      primaryUrl: url,
+      githubRepo: github,
       figma,
-      github,
-      additional1,
-      additional2,
-      additional3
-   );
+      additionalDetails,
+   });
    const resProject = await project.save();
    res.status(200).json({
       status: 'Success!',
@@ -33,17 +31,15 @@ exports.addProject = async (req, res) => {
 
 exports.editProject = async (req, res) => {
    const { id } = req.query;
-   const { projectTitle, url, figma, github, additional1, additional2, additional3 } = req.body;
-   const project = new Project(
-      projectTitle,
-      url,
-      figma,
-      github,
-      additional1,
-      additional2,
-      additional3
-   );
-   const resProject = await project.save(id);
+   const { projectTitle, url, figma, github, additionalDetails } = req.body;
+   const project = await Project.findById(id);
+   project.title = projectTitle;
+   project.primaryUrl = url;
+   project.figma = figma;
+   project.githubRepo = github;
+   project.additionalDetails = additionalDetails;
+
+   const resProject = await project.save();
    res.status(200).json({
       status: 'Success!',
       message: 'Project updated successfully!',
@@ -53,6 +49,6 @@ exports.editProject = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
    const projectId = req.query.id;
-   await Project.deleteById(projectId);
+   await Project.findByIdAndDelete(projectId);
    res.status(200).json({ status: 'Success!', message: 'Project deleted successfully!' });
 };

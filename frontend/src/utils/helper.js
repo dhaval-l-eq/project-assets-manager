@@ -1,14 +1,35 @@
-export function transformProject(data) {
-   const additional = [];
-   ['additional1', 'additional2', 'additional3'].forEach(handle => {
-      if (data[handle] && data[handle].length > 0) {
-         additional.push(data[handle].split(' - '));
-      }
-   });
-   return { ...data, additional };
-}
-
 export async function copyToClipboard(data) {
    await navigator.clipboard.writeText(data);
    return true;
 }
+
+export function transformAdditionalDetails(data) {
+   const arr = [];
+   data.forEach(item => {
+      if (item.item && item.item.length > 0) {
+         const [key, value] = item.item.split(' - ');
+         if (key && value) {
+            arr.push({
+               title: key,
+               description: value,
+            });
+         }
+      }
+   });
+   return arr;
+}
+
+export function convertAdditionalToString(data) {
+   return data.map(item => {
+      return {item: item.title + ' - ' + item.description}
+   })
+}
+
+export function isValidUrl(string) {
+   try {
+     new URL(string);
+     return true;
+   } catch (err) {
+     return false;
+   }
+ }

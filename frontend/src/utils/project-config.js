@@ -24,28 +24,7 @@ export const formElements = [
       name: 'github',
       validationSchema: z.string(),
       label: 'Github repo',
-   },
-   {
-      id: 'f5',
-      name: 'additional1',
-      validationSchema: z.string(),
-      label: 'Additional Link 1',
-      placeholder: 'Name - Value'
-   },
-   {
-      id: 'f6',
-      name: 'additional2',
-      validationSchema: z.string(),
-      label: 'Additional Link 2',
-      placeholder: 'Name - Value'
-   },
-   {
-      id: 'f7',
-      name: 'additional3',
-      validationSchema: z.string(),
-      label: 'Additional Link 3',
-      placeholder: 'Name - Value'
-   },
+   }
 ]
 
 const schemaObj = {};
@@ -55,6 +34,8 @@ formElements.forEach(el => {
    schemaObj[el.name] = el.validationSchema;
    formKeysObj[el.name] = '';
 })
+
+schemaObj.additionalDetails = z.array(z.object({item: z.string()}));
 
 export const formSchemaDef = schemaObj;
 export const formKeys = formKeysObj;
